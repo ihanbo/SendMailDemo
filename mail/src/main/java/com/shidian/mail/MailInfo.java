@@ -4,19 +4,19 @@ import java.util.Properties;
 
 public class MailInfo {
 
-	private String mailServerHost;// ·¢ËÍÓÊ¼şµÄ·şÎñÆ÷µÄIP
-	private String mailServerPort;// ·¢ËÍÓÊ¼şµÄ·şÎñÆ÷µÄ¶Ë¿Ú
-	private String fromAddress;// ÓÊ¼ş·¢ËÍÕßµÄµØÖ·
-	private String toAddress;	// ÓÊ¼ş½ÓÊÕÕßµÄµØÖ·
-	private String userName;// µÇÂ½ÓÊ¼ş·¢ËÍ·şÎñÆ÷µÄÓÃ»§Ãû
-	private String password;// µÇÂ½ÓÊ¼ş·¢ËÍ·şÎñÆ÷µÄÃÜÂë
-	private boolean validate = true;// ÊÇ·ñĞèÒªÉí·İÑéÖ¤
-	private String subject;// ÓÊ¼şÖ÷Ìâ
-	private String content;// ÓÊ¼şµÄÎÄ±¾ÄÚÈİ
-	private String[] attachFileNames;// ÓÊ¼ş¸½¼şµÄÎÄ¼şÃû
+	private String mailServerHost;// å‘é€é‚®ä»¶çš„æœåŠ¡å™¨çš„IP
+	private String mailServerPort;// å‘é€é‚®ä»¶çš„æœåŠ¡å™¨çš„ç«¯å£
+	private String fromAddress;// é‚®ä»¶å‘é€è€…çš„åœ°å€
+	private String toAddress;	// é‚®ä»¶æ¥æ”¶è€…çš„åœ°å€
+	private String userName;// ç™»é™†é‚®ä»¶å‘é€æœåŠ¡å™¨çš„ç”¨æˆ·å
+	private String password;// ç™»é™†é‚®ä»¶å‘é€æœåŠ¡å™¨çš„å¯†ç 
+	private boolean validate = true;// æ˜¯å¦éœ€è¦èº«ä»½éªŒè¯
+	private String subject;// é‚®ä»¶ä¸»é¢˜
+	private String content;// é‚®ä»¶çš„æ–‡æœ¬å†…å®¹
+	private String[] attachFileNames;// é‚®ä»¶é™„ä»¶çš„æ–‡ä»¶å
 
 	/**
-	 * »ñµÃÓÊ¼ş»á»°ÊôĞÔ
+	 * è·å¾—é‚®ä»¶ä¼šè¯å±æ€§
 	 */
 	public Properties getProperties() {
 		Properties p = new Properties();

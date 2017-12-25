@@ -10,18 +10,18 @@ import java.io.File;
 
 public class SendMailUtil {
 
-    //qq
-    private static final String HOST = "smtp.qq.com";
-    private static final String PORT = "587";
-    private static final String FROM_ADD = "teprinciple@foxmail.com";
-    private static final String FROM_PSW = "lfrlpganzjrwbeci";
+//    //qq
+//    private static final String HOST = "smtp.qq.com";
+//    private static final String PORT = "587";
+//    private static final String FROM_ADD = "335361321@qq.com";
+//    private static final String FROM_PSW = "HB-919119";
 
-//    //163
-//    private static final String HOST = "smtp.163.com";
-//    private static final String PORT = "465"; //或者465  994
-//    private static final String FROM_ADD = "teprinciple@163.com";
-//    private static final String FROM_PSW = "teprinciple163";
-////    private static final String TO_ADD = "2584770373@qq.com";
+    //163
+    private static final String HOST = "imap.163.com";
+    private static final String PORT = "993"; //或者465  994
+    private static final String FROM_ADD = "ihanbo@163.com";
+    private static final String FROM_PSW = "hb919119";
+//    private static final String TO_ADD = "2584770373@qq.com";
 
 
     public static void send(final File file,String toAdd){

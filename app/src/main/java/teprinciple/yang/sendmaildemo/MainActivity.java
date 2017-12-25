@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void senTextMail(View view) {
-        SendMailUtil.send(editText.getText().toString());
+        SendMailUtil.send("330880496@qq.com");
     }
 
     public void sendFileMail(View view) {
