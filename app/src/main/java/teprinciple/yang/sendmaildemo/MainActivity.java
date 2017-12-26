@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.shidian.mail.AA;
 import com.shidian.mail.SendMailUtil;
 
 import java.io.File;
@@ -27,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void senTextMail(View view) {
-        SendMailUtil.send("330880496@qq.com");
+//        SendMailUtil.send("330880496@qq.com");
+//        MailManager.getInstance().sendMail("测试测试","我发的邮件");
+        AA.onCreate();
     }
 
     public void sendFileMail(View view) {
