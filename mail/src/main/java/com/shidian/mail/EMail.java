@@ -7,25 +7,27 @@ import java.util.Properties;
  */
 
 public class EMail {
-    private Mail mMail;
-    private String mAccount;
-    private String mPwd;
-    private String mTitle;
-    private String mContent;
-    private String[] mReciever;
+    Mail mMail;
+    String mAccount;
+    String mPwd;
+    String mTitle;
+    String mContent;
+    String[] mReciever;
 
-    public EMail sina(String account,String pwd){
-        mMail = Mail.SINA_MAIL_CN;
-        mAccount = account;
-        mPwd = pwd;
-        return this;
+    public static EMail sina(String account,String pwd){
+        EMail email = new EMail();
+        email.mMail = Mail.SINA_MAIL_CN;
+        email.mAccount = account;
+        email.mPwd = pwd;
+        return email;
     }
 
-    public EMail wy163(String account,String pwd){
-        mMail = Mail.MAIL_163;
-        mAccount = account;
-        mPwd = pwd;
-        return this;
+    public static EMail wy163(String account,String pwd){
+        EMail email = new EMail();
+        email.mMail = Mail.MAIL_163;
+        email.mAccount = account;
+        email.mPwd = pwd;
+        return email;
     }
 
     public EMail setTitle(String title){
@@ -43,27 +45,16 @@ public class EMail {
         return this;
     }
 
-    public boolean test(){
+    public void send() throws Exception{
+        if(!test()){
+            throw new RuntimeException("检查未通过!");
+        }
+        EmailSender.getInstance().sendEmail(this);
+    }
+
+    private boolean test(){
         return checkStrs(mAccount,mPwd)&&mMail!=null&&mReciever!=null;
     }
-
-    public EMail set(String s){
-
-
-        return this;
-    }
-
-    private Properties getProperties() {
-        Properties properties = new Properties();
-        //地址
-        properties.put("mail.smtp.host",mMail.getHost());
-        //端口号
-        properties.put("mail.smtp.port", mMail.getPort());
-        //是否验证
-        properties.put("mail.smtp.auth", true);
-        return properties;
-    }
-
 
     private boolean checkStrs(String... s){
         if(s==null||s.length==0){

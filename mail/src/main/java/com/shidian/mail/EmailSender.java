@@ -11,110 +11,86 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-public class EmailSender {
-    private Properties properties;
-    private Session session;
-    private Message message;
-    private MimeMultipart multipart;
+class EmailSender {
 
-    EmailSender() {
-        super();
-        this.properties = new Properties();
+    private EmailSender() {
     }
 
-    public Properties getProperties() {
+    Properties getProperties(EMail eMail) {
         Properties properties = new Properties();
         //地址
-        properties.put("mail.smtp.host","smtp.sina.cn");
+        properties.put("mail.smtp.host",eMail.mMail.getHost());
         //端口号
-        properties.put("mail.smtp.port", "25");
+        properties.put("mail.smtp.port", eMail.mMail.getPort());
         //是否验证
         properties.put("mail.smtp.auth", true);
         return properties;
     }
 
-    public void setProperties(String host, String post) {
-        //地址
-        this.properties.put("mail.smtp.host", host);
-        //端口号
-        this.properties.put("mail.smtp.port", post);
-        //是否验证
-        this.properties.put("mail.smtp.auth", true);
-        this.session = Session.getInstance(properties);
-        this.message = new MimeMessage(session);
-        this.multipart = new MimeMultipart("mixed");
-    }
 
-    /**
-     * 设置收件人
-     *
-     * @param receiver
-     * @throws MessagingException
-     */
-    public void setReceiver(String... receiver) throws MessagingException {
-        Address[] address = new InternetAddress[receiver.length];
-        for (int i = 0; i < receiver.length; i++) {
-            address[i] = new InternetAddress(receiver[i]);
+    /** 设置收件人 */
+    private void setReceiver(EMail eMail, Message message) throws MessagingException {
+        Address[] address = new InternetAddress[eMail.mReciever.length];
+        for (int i = 0; i < eMail.mReciever.length; i++) {
+            address[i] = new InternetAddress(eMail.mReciever[i]);
         }
-        this.message.setRecipients(Message.RecipientType.TO, address);
+        message.setRecipients(Message.RecipientType.TO, address);
     }
 
-    /**
-     * 设置邮件
-     *
-     * @param from    来源
-     * @param title   标题
-     * @param content 内容
-     * @throws AddressException
-     * @throws MessagingException
-     */
-    public void setMessage(String from, String title, String content) throws AddressException, MessagingException {
-        this.message.setFrom(new InternetAddress(from));
-        this.message.setSubject(title);
+    /** 设置邮件文本内容
+     * @param eMail
+     * @param multipart*/
+    private void setTextContent(EMail eMail, MimeMultipart multipart) throws MessagingException {
         //纯文本的话用setText()就行，不过有附件就显示不出来内容了
         MimeBodyPart textBody = new MimeBodyPart();
-        this.multipart.addBodyPart(textBody);
+        textBody.setContent(eMail.mContent,"text/html;charset=utf-8");
+        multipart.addBodyPart(textBody);
     }
 
-    /**
-     * 添加附件
-     *
-     * @param filePath 文件路径
-     * @throws MessagingException
-     */
-    public void addAttachment(String filePath) throws MessagingException {
+    /** 添加附件  */
+    private void addAttachment(String filePath,MimeMultipart multipart) throws MessagingException {
         FileDataSource fileDataSource = new FileDataSource(new File(filePath));
         DataHandler dataHandler = new DataHandler(fileDataSource);
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
         mimeBodyPart.setDataHandler(dataHandler);
         mimeBodyPart.setFileName(fileDataSource.getName());
-        this.multipart.addBodyPart(mimeBodyPart);
+        multipart.addBodyPart(mimeBodyPart);
     }
 
     /**
      * 发送邮件
-     *
-     * @param host    地址
-     * @param account 账户名
-     * @param pwd     密码
-     * @throws MessagingException
      */
-    public void sendEmail(String host, String account, String pwd) throws MessagingException {
+    public void sendEmail(EMail eMail) throws Exception {
+        Properties properties= getProperties(eMail);
+        Session session= Session.getInstance(properties);
+        Message message= new MimeMessage(session);
+        MimeMultipart multipart= new MimeMultipart("mixed");
+
+        //设置来源去处
+        message.setFrom(new InternetAddress(eMail.mAccount));
+        setReceiver(eMail,message);
+
+        //设置邮件主题
+        message.setSubject(eMail.mTitle);
+
+        //设置文本内容
+        setTextContent(eMail,multipart);
+
         //发送时间
-        this.message.setSentDate(new Date());
+        message.setSentDate(new Date());
         //发送的内容，文本和附件
-        this.message.setContent(this.multipart);
-        this.message.saveChanges();
+        message.setContent(multipart);
+        message.saveChanges();
+
         //创建邮件发送对象，并指定其使用SMTP协议发送邮件
         Transport transport = session.getTransport("smtp");
         //登录邮箱
-        transport.connect(host, account, pwd);
+        transport.connect(eMail.mMail.getHost(), eMail.mAccount, eMail.mPwd);
         //发送邮件
         transport.sendMessage(message, message.getAllRecipients());
         //关闭连接
@@ -125,7 +101,6 @@ public class EmailSender {
     public static EmailSender getInstance() {
         return InstanceHolder.instance;
     }
-
 
     private static class InstanceHolder {
         private static EmailSender instance = new EmailSender();
