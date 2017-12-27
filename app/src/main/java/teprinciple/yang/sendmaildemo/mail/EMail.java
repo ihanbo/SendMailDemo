@@ -1,6 +1,4 @@
-package com.shidian.mail;
-
-import java.util.Properties;
+package teprinciple.yang.sendmaildemo.mail;
 
 /**
  * Created by hanbo on 2017/12/26.
@@ -14,7 +12,7 @@ public class EMail {
     String mContent;
     String[] mReciever;
 
-    public static EMail sina(String account,String pwd){
+    public static EMail sina(String account, String pwd){
         EMail email = new EMail();
         email.mMail = Mail.SINA_MAIL_CN;
         email.mAccount = account;
@@ -22,7 +20,7 @@ public class EMail {
         return email;
     }
 
-    public static EMail wy163(String account,String pwd){
+    public static EMail wy163(String account, String pwd){
         EMail email = new EMail();
         email.mMail = Mail.MAIL_163;
         email.mAccount = account;
@@ -46,14 +44,17 @@ public class EMail {
     }
 
     public void send() throws Exception{
-        if(!test()){
+        if(!check()){
             throw new RuntimeException("检查未通过!");
         }
         EmailSender.getInstance().sendEmail(this);
     }
 
-    private boolean test(){
-        return checkStrs(mAccount,mPwd)&&mMail!=null&&mReciever!=null;
+    private boolean check(){
+        return checkStrs(mAccount,mPwd)
+                &&mMail!=null
+                &&mMail.checkAccount(mAccount)
+                &&mReciever!=null;
     }
 
     private boolean checkStrs(String... s){

@@ -1,6 +1,4 @@
-package com.shidian.mail;
-
-import java.util.Properties;
+package teprinciple.yang.sendmaildemo.mail;
 
 /**
  * Created by hanbo on 2017/12/26.
@@ -9,7 +7,7 @@ import java.util.Properties;
 public interface Mail {
     String getHost();
     String getPort();
-
+    boolean checkAccount(String account);
 
     Mail SINA_MAIL_CN  = new  Mail(){
         @Override
@@ -20,6 +18,11 @@ public interface Mail {
         @Override
         public String getPort() {
             return "25";
+        }
+
+        @Override
+        public boolean checkAccount(String account) {
+            return account.endsWith("@sina.cn");
         }
 
     };
@@ -34,6 +37,12 @@ public interface Mail {
         public String getPort() {
             return "25";
         }
+        @Override
+        public boolean checkAccount(String account) {
+            return account.endsWith("@163.com");
+        }
 
     };
+
+
 }

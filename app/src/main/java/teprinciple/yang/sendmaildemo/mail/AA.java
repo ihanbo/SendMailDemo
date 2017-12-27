@@ -1,6 +1,4 @@
-package com.shidian.mail;
-
-import javax.mail.internet.AddressException;
+package teprinciple.yang.sendmaildemo.mail;
 
 /**
  * Created by hanbo on 2017/12/26.

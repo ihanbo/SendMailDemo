@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.shidian.mail.AA;
+import teprinciple.yang.sendmaildemo.mail.AA;
+
 
 public class MainActivity extends AppCompatActivity {
 

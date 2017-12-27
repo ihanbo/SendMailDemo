@@ -1,4 +1,4 @@
-package com.shidian.mail;
+package teprinciple.yang.sendmaildemo.mail;
 
 import java.io.File;
 import java.util.Date;
