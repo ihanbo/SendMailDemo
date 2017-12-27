@@ -13,7 +13,12 @@ public class AA {
             @Override
             public void run() {
                 try {
-                    EMail.wy163( "ihanbo@163.com", "hb919119")
+//                    EMail.wy163( "ihanbo@163.com", "hb919119")
+//                            .setTitle("网易邮箱")
+//                            .setContent("测试发送")
+//                            .setReciever("330880496@qq.com").send();
+
+                    EMail.sina( "ihanbo@sina.cn", "919119")
                             .setTitle("新浪邮箱")
                             .setContent("测试发送")
                             .setReciever("330880496@qq.com").send();
